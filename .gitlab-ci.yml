@@ -13,12 +13,13 @@ workflow:
 .test:
   - make test
   
-makeBinary:
+build:
+  stage: build
   script:
     - <<:*check
     - <<:*build
 
 stages:
-  - makeBinary
+  - build
 
 
