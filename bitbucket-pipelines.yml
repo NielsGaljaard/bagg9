@@ -15,7 +15,7 @@ definitions:
           - go mod download
           - make build
         artifacts: 
-          - ./dist/release/*
+          - ./dist/**
 pipelines:
   pull-requests:
     '**':
