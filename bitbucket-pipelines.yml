@@ -11,6 +11,7 @@ definitions:
     - step: &build
         name: "build binaries"
         script:
+          - apk add make
           - go mod download
           - make build
         artifacts: 
