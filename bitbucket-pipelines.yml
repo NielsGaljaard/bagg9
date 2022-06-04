@@ -17,7 +17,9 @@ definitions:
 pipelines:
   pull-requests:
     '**':
-      - step: *check-deps
+      - step: 
+          <<: *check-deps
   branches:
     master:
-      - step: *build
+      - step: 
+          <<: *build
