@@ -3,23 +3,22 @@ image: golang:1.18-alpine
 definitions:
   steps:
     - step: &check-deps
-      name: "check dependencies"
-      script:
-        - set -e
-        - go mod tidy && go mod vendor
-        - git diff --exit-code -- go.mod go.sum
+        name: "check dependencies"
+        script:
+          - set -e
+          - go mod tidy && go mod vendor
+          - git diff --exit-code -- go.mod go.sum
     - step: &build
-      name: "build binaries"
-      script:
-        - make build
-      artifacts: 
-        - ./dist/release/*
+        name: "build binaries"
+        script:
+          - go mod download
+          - make build
+        artifacts: 
+          - ./dist/release/*
 pipelines:
   pull-requests:
     '**':
-      - step: 
-          <<: *check-deps
+      - step: *check-deps
   branches:
     master:
-      - step: 
-          <<: *build
+      - step: *build
