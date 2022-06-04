@@ -8,13 +8,23 @@ import (
 )
 
 type Config struct {
-	Secrets Secrets `mapstructure:"Secrets"`
+	Secrets []Secret `mapstructure:"Secrets"`
+}
+type Secret struct {
+	AppPassword string `mapstructure:"appPassword"`
+	id          string `mapstructure:"id"`
 }
 
-type Secrets struct {
-	BitbucketPassword string `mapstructure:"bbAppPassword"`
-	GithubPassword    string `mapstructure:"ghAppPassword"`
-	GitlabPassword    string `mapstructure:"glAppPassword"`
+type Cluster struct {
+	Name      string      `mapstructure:"name"`
+	NameSpace []NameSpace `mapstructure:"namespaces"`
+}
+
+type NameSpace struct {
+	Name     string `mapstructure:"name"`
+	Kind     string `mapstructure:"kind"`
+	URL      string `mapstructure:"URL"`
+	SecretID string `mapstructure:"secretID"`
 }
 
 func ReadConfig() (*Config, error) {
