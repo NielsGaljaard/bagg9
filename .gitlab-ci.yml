@@ -4,14 +4,21 @@ workflow:
   rules:
     - if: $CI_COMMIT_BRANCH == "development" || ($CI_PIPELINE_SOURCE == 'merge_request_event' && ( $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "development" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master" ))
 
-.check-deps:
+.check-deps: &check
   - apk add make
   - go mod tidy && go mod vendor
   - git diff --exit-code go.mod go.sum
-.build:
+.build: &build
   - make build
 .test:
   - make test
+  
+makeBinary:
+  script:
+    - <<:*check
+    - <<:*build
+
 stages:
-  - check-deps
-  - build
+  - makeBinary
+
+
